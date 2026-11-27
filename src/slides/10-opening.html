@@ -1,0 +1,76 @@
+<section class="slide" data-section="Opening" data-title="Title" data-dur="30" data-steps="3">
+  <div class="panes">
+  <div class="pane" data-s="0" data-pane="Title">
+  <div class="split wide-l">
+    <div class="stack gap-l">
+      <div class="kicker" data-s="1"><svg class="laravel" viewBox="0 0 50 52" role="img" aria-label="Laravel"><path fill="#FF2D20" d="M49.626 11.564a.809.809 0 0 1 .028.209v10.972a.8.8 0 0 1-.402.694l-9.209 5.302V39.25c0 .286-.152.55-.4.694L20.42 51.01c-.044.025-.092.041-.14.058-.018.006-.35.022-.53.022-.062 0-.121-.007-.18-.022-.023-.006-.044-.02-.066-.03-.037-.014-.077-.026-.113-.047L.402 39.944A.801.801 0 0 1 0 39.25V6.334c0-.072.01-.142.028-.21.006-.023.02-.044.028-.067.015-.42.029-.85.051-.124.015-.29.038-.53.058-.08.02-.28.038-.57.06-.082s.05-.42.075-.63c.024-.2.045-.42.071-.058h.001l9.6-5.533a.802.802 0 0 1 .802 0l9.6 5.533h.002c.25.16.045.38.07.058.25.02.052.04.75.062.022.026.04.055.06.082.021.027.044.051.058.08.023.04.036.82.052.124.008.023.022.044.028.068a.809.809 0 0 1 .028.209v20.559l8.008-4.611V11.772c0-.71.01-.142.028-.208.007-.24.02-.45.028-.068.016-.42.03-.85.053-.124.015-.28.038-.52.058-.08.02-.27.038-.56.06-.082s.05-.42.074-.062c.026-.2.047-.42.072-.058h.001l9.601-5.533a.801.801 0 0 1 .802 0l9.6 5.533c.27.016.5.038.72.058.024.02.05.042.074.062.022.026.04.055.06.082.022.028.045.052.06.08.022.04.035.82.05.124.01.023.023.044.03.068zM47.99 22.28v-9.104l-3.362 1.936-4.646 2.675v9.104l8.008-4.611zm-9.61 16.507v-9.11l-4.57 2.61-13.05 7.448v9.196l17.62-10.144zM1.602 7.719v31.068l17.618 10.143v-9.194l-9.204-5.209-.003-.002-.004-.002c-.031-.018-.057-.044-.086-.066-.025-.02-.054-.036-.076-.058l-.002-.003c-.026-.025-.044-.056-.066-.084-.02-.027-.044-.05-.06-.078l-.001-.003c-.018-.03-.029-.066-.042-.1-.013-.03-.03-.058-.038-.09v-.001c-.01-.038-.012-.078-.016-.117-.004-.03-.012-.06-.012-.09V13.99L4.965 9.654 1.602 7.72zM10.415 1.828L2.409 6.436l8.004 4.609 8.005-4.61-8.005-4.607zm4.165 28.75l4.645-2.674V7.719l-3.363 1.936-4.646 2.675v20.185l3.364-1.937zM39.982 6.869l-8.005 4.609 8.005 4.609 8.004-4.61-8.004-4.608zm-.801 10.607l-4.646-2.675-3.363-1.936v9.104l4.645 2.674 3.364 1.937v-9.104zM20.02 38.618l11.743-6.704 5.87-3.35-8-4.606-9.211 5.303-8.395 4.833 7.993 4.524z"/></svg><span>Laravel Nagpur</span></div>
+      <h1 data-s="1">Reinforcement learning, from a failing test</h1>
+      <p class="lede wide" data-s="2">You already train things with red and green. Here is how a machine does it.</p>
+      <div class="chips" data-s="3">
+        <span class="chip"><i data-i="user"></i>Bhushan Gaikwad</span>
+        <span class="chip ghost"><i data-i="clock"></i>45 min</span>
+        <span class="chip">Laravel Nagpur &middot; 27 Nov 2026</span>
+      </div>
+    </div>
+    <figure class="stack" data-s="2" style="gap:.6rem">
+      <div data-widget="dotmatrix" data-ambient data-from="0" data-rows="8" data-cols="13"></div>
+      <figcaption class="tiny">8 attempts at one task, one dot per hidden test. Illustrative, not a recorded run.</figcaption>
+    </figure>
+  </div>
+
+  </div>
+  </div>
+  <aside class="notes" data-pane-start="0">
+    <p><strong>0:30.</strong> One idea for the whole talk: you already work in a loop where a machine tells you red or green. Reinforcement learning is that loop with the human taken out.</p>
+    <p>Point at the dots while they fill. Each row is one attempt at the same task. Each dot is one hidden test. Mostly red at first, then green. That drift is what we will spend 45 minutes understanding.</p>
+    <p>Say it is illustrative: this is the shape of learning, not a recorded run.</p>
+  </aside>
+</section>
+
+<section class="slide" data-section="Opening" data-title="Who is talking" data-dur="50" data-steps="5">
+  <div class="panes">
+  <div class="pane" data-s="0" data-pane="Who">
+  <div class="who">
+    <div class="stack gap-s" style="align-self:start">
+      <figure class="portrait" data-s="1 scale"><img src="data:image/jpeg;base64,{{asset:portrait.b64}}" alt="Bhushan Gaikwad"></figure>
+      <div class="chips" data-s="5" style="flex-direction:column;align-items:flex-start">
+        <span class="chip"><i data-i="server"></i>Laravel and PHP</span>
+        <span class="chip"><i data-i="cpu"></i>LLMs in production</span>
+        <span class="chip"><i data-i="clock"></i>10+ years shipping</span>
+      </div>
+    </div>
+    <div class="stack gap-s whotext">
+      <div data-s="1">
+        <h2 class="whoname">Bhushan Gaikwad</h2>
+        <div class="handles"><span class="handle"><b>@rckstrbhushan</b></span><span class="handle"><b>github.com/Bhushan</b></span></div>
+      </div>
+      <div class="prod lead" data-s="2">
+        <span class="mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><defs><linearGradient id="alfMark" x1="32" y1="0" x2="32" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2F6BFF"/><stop offset="1" stop-color="#2259E4"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#alfMark)"/><g stroke="#fff" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M16 46 L32 18 L48 46" stroke-width="3.4"/><path d="M16 46 Q24 40 32 38 Q40 40 48 46" stroke-width="2.6"/></g></svg></span>
+        <span class="body"><b>Alfred Scholar</b><span class="note">The calm research workspace for scholars. Retrieval over research PDFs, every answer cited to the page.</span></span>
+      </div>
+      <div class="prod side" data-s="3">
+        <span class="mark plate" aria-hidden="true"><i data-i="shield"></i></span>
+        <span class="body"><b>Weekend projects</b><span class="note">Austa, comment to DM automation for creators. Jaanch, a scam verdict on WhatsApp in under 15 seconds.</span></span>
+      </div>
+      <div class="prod feat" data-s="4">
+        <span class="body">
+          <b>Second Brain</b>
+          <span class="note">One memory for every AI app you use. Linked notes that Claude, ChatGPT, Cursor and any MCP client can read and write, through one remote MCP address. Open source.</span>
+          <span class="links"><a href="https://www.getsecondbrain.io" target="_blank" rel="noopener noreferrer">getsecondbrain.io</a><a href="https://github.com/bhushan/getsecondbrain.io" target="_blank" rel="noopener noreferrer">github.com/bhushan/getsecondbrain.io</a></span>
+        </span>
+        <img class="snap" src="data:image/jpeg;base64,{{asset:secondbrain.b64}}" alt="Second Brain landing page: One memory for every AI app you use">
+      </div>
+      <div class="prod side now" data-s="5">
+        <span class="mark plate" aria-hidden="true"><i data-i="target"></i></span>
+        <span class="body"><b>Right now: rl-gym</b><span class="note">Learning RL by building a Laravel coding environment. The second half of this talk comes from it.</span></span>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  <aside class="notes" data-pane-start="0">
+    <p><strong>0:50.</strong> Ten years of Laravel, mostly solo. Alfred Scholar pays the bills. The weekend projects are where the experiments happen: Austa and Jaanch.</p>
+    <p><strong>Second Brain</strong> is the one to point at: it is the memory every AI app I use shares through MCP, and it is open source. Screenshot is the landing page. Say the two links out loud, or tell people the repo name is bhushan/getsecondbrain.io.</p>
+    <p>The last card matters today: I am new to machine learning and I am learning RL by building a gym for Laravel code. I started with no ML background and I will teach it the way I had to learn it. The case-study half uses real numbers from that project, including the failures.</p>
+  </aside>
+</section>

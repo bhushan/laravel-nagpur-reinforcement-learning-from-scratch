@@ -1,0 +1,117 @@
+<section class="slide" data-section="Real world" data-title="rl-gym: what exists, and the baseline" data-dur="210" data-steps="19" data-result="fail">
+  <div class="panes">
+  <div class="pane" data-s="0" data-until="4" data-pane="The project">
+  <div class="split wide-l top">
+    <div class="stack gap-l">
+      <div class="head"><div class="kicker" data-s="1">Act 4 · A real use case</div><h2 data-s="1">rl-gym: a Laravel coding environment for learning RL.</h2></div>
+      <ul class="clean">
+        <li data-s="2">Goal: a small model that matches frontier models on a measurable set of Laravel tasks, at about one thirtieth of the cost.</li>
+        <li data-s="3">It is a goal, not a result. Nothing here has been trained to that level yet.</li>
+        <li data-s="4">Built to learn: every step on the previous slides exists as code I wrote and tested.</li>
+      </ul>
+    </div>
+    <div class="steps9" data-s="2">
+      <div class="st9 done"><span class="n">1</span><span>The loop and the reward function</span><span class="s">done</span></div>
+      <div class="st9 done"><span class="n">2</span><span>Safe execution</span><span class="s">done</span></div>
+      <div class="st9 done"><span class="n">3</span><span>Task dataset, train and test split</span><span class="s">done</span></div>
+      <div class="st9 done"><span class="n">4</span><span>What an LLM is, a local baseline</span><span class="s">done</span></div>
+      <div class="st9 next"><span class="n">5</span><span>Real Laravel tasks in a Docker sandbox</span><span class="s">in progress</span></div>
+      <div class="st9 next"><span class="n">6</span><span>Compare with a frontier model</span><span class="s">next</span></div>
+      <div class="st9 later"><span class="n">7</span><span>Supervised fine-tuning with LoRA</span><span class="s">planned</span></div>
+      <div class="st9 later"><span class="n">8</span><span>Reinforcement learning with GRPO</span><span class="s">planned</span></div>
+      <div class="st9 later"><span class="n">9</span><span>Multi-step agent episodes</span><span class="s">planned</span></div>
+    </div>
+  </div>
+
+  </div>
+  <div class="pane" data-s="5" data-until="11" data-pane="Today">
+  <div class="head"><div class="kicker" data-s="6">Measured, not hoped</div><h2 data-s="6" class="wide">What exists today, in numbers.</h2></div>
+  <div class="metrics">
+    <div class="metric g" data-s="7"><span class="v">7</span><span class="l">Laravel tasks: 5 train, 2 test. Provisional split.</span></div>
+    <div class="metric" data-s="8"><span class="v">82</span><span class="l">tests passing, plus 1 strict expected failure that documents the forgery hole</span></div>
+    <div class="metric a" data-s="9"><span class="v">11 / 15</span><span class="l">toy PHP tasks solved by the 1.7B model, training split</span></div>
+    <div class="metric r" data-s="10"><span class="v">0 / 7</span><span class="l">Laravel tasks solved by the same model, greedy</span></div>
+  </div>
+  <p class="sub" data-s="11">Student model: Qwen3 1.7B, 4-bit, running locally on a laptop. Every model-written line of PHP runs in the Docker sandbox from step 5.</p>
+
+  </div>
+  <div class="pane" data-s="12" data-pane="Baseline">
+  <div class="head"><div class="kicker red" data-s="13">The first honest result</div><h2 data-s="13" class="wide">The baseline solved none. Reading the answers said why.</h2></div>
+  <table class="tbl">
+    <thead data-s="13"><tr><th>Task</th><th>What the model did</th></tr></thead>
+    <tbody>
+      <tr data-s="14"><td class="mono">cart-add</td><td>Skipped input validation, so the 422 tests failed.</td></tr>
+      <tr data-s="15"><td class="mono">cart-remove</td><td>Broke the Cart model by calling methods that do not exist.</td></tr>
+      <tr data-s="16"><td class="mono">cart-checkout</td><td>Caused a PHP fatal error: put a request class in the controllers folder and overwrote OrderController.</td></tr>
+      <tr data-s="17"><td class="mono">cart-stock</td><td>Partly right: 7 of 17 tests bad.</td></tr>
+      <tr data-s="18"><td class="mono">cart-update</td><td>Wrote the same request file 13 times and ran out of room.</td></tr>
+    </tbody>
+  </table>
+  <p class="tiny" data-s="19">The first four rows are from the first run on the four earliest tasks, checked against Pest output. The last row is from the later seven-task run.</p>
+  <p class="sub" data-s="19">Binary reward on a model that never succeeds gives no signal. That is why the next steps are examples first, then rewards.</p>
+
+  </div>
+  </div>
+  <aside class="notes" data-pane-start="0">
+    <p><strong>1:10.</strong> The use case is not a product, it is a learning project that follows the same ten steps. The goal: a small model that matches frontier models on a measurable Laravel task set at roughly a thirtieth of the cost.</p>
+    <p>Say it plainly: that is the goal, not a result. I have not trained the model yet. I started with no ML background, so the curriculum goes one concept at a time, and each one became code with tests.</p>
+    <p>Walk the nine lessons quickly: done up to the real Laravel tasks, which are in progress. Frontier comparison needs an API key and spend approval, so it waits. Fine-tuning and RL come after.</p>
+  </aside>
+  <aside class="notes" data-pane-start="5">
+    <p><strong>1:10, five steps.</strong> Real numbers from the repo. Seven Laravel tasks: five for training, two held out, split not final. 82 tests pass in the gym itself, plus one deliberate expected failure that documents the report-forgery hole.</p>
+    <p>On 15 toy PHP tasks, the small local model solves 11. On the seven Laravel tasks it solves none: 0 of 7. Same model, same decoding. Real tasks are far harder than toy ones.</p>
+    <p>The model is Qwen3 1.7B at 4-bit running on a laptop, no cloud GPU yet.</p>
+  </aside>
+  <aside class="notes" data-pane-start="12">
+    <p><strong>1:10.</strong> Each row is a real failure checked by hand against the Pest error output, not guessed. Skipped validation. Broke a model by calling methods that do not exist. A PHP fatal error from a misplaced class overwriting a controller. One partial: 7 of 17 tests bad. And the loop where one file was written thirteen times.</p>
+    <p>Conclusion: they are all genuine model mistakes, which is what we want from a baseline. The earlier 0 of 4 on my first run was my parser's fault, and reading the answers is how I found out.</p>
+    <p>That is the cold-start problem from the previous act, live.</p>
+  </aside>
+</section>
+
+<section class="slide" data-section="Real world" data-title="RL in the real world" data-dur="170" data-steps="6">
+  <div class="panes">
+  <div class="pane" data-s="0" data-pane="Real world">
+  <div class="head"><div class="kicker" data-s="1">Beyond my gym</div><h2 data-s="1" class="wide">Five times a reward did the teaching.</h2></div>
+  <table class="tbl">
+    <thead data-s="1"><tr><th>Where</th><th>The reward</th><th>What happened</th></tr></thead>
+    <tbody>
+      <tr data-s="2"><td><b>AlphaGo</b>, Game</td><td>win or lose</td><td>Move 37: experts called it a mistake. It won.</td></tr>
+      <tr data-s="3"><td><b>Data centre cooling</b>, Infrastructure</td><td>less energy</td><td>Google reported up to 40% less cooling energy.</td></tr>
+      <tr data-s="4"><td><b>ChatGPT</b>, Chat assistant</td><td>what people prefer</td><td>Polite and helpful, and easy to flatter.</td></tr>
+      <tr data-s="5"><td><b>DeepSeek-R1</b>, Reasoning model</td><td>right answer, passing code</td><td>Same group trick as step 8. Learned to check itself.</td></tr>
+      <tr data-s="6"><td><b>CoastRunners</b>, Game</td><td>points</td><td>Circled forever, on fire, instead of finishing.</td></tr>
+    </tbody>
+  </table>
+
+  </div>
+  </div>
+  <aside class="notes" data-pane-start="0">
+    <p><strong>2:50, six presses, about 30 seconds each.</strong> Press 1: my gym is not trained yet, so here is what this loop has already done elsewhere. Check numbers and dates against the sources before the talk.</p>
+    <p>Press 2, AlphaGo: beat Lee Sedol 4 to 1. In game 2 it played move 37, which commentators first thought was a mistake. Its successor AlphaZero learned Go, chess and shogi from the rules alone, by playing itself. Line: "Nobody taught it move 37. A reward that only says win or lose was enough."</p>
+    <p>Press 3, data centre cooling: DeepMind's system set fans, pumps and chillers from thousands of sensor readings. Google reported up to a 40 percent cut in cooling energy. Line: "The reward was the electricity bill, with safety limits it could never break."</p>
+    <p>Press 4, ChatGPT: people ranked answers, a model learned those rankings, and the language model was trained with RL to score well on them. That is RLHF. The judge is a learned guess at human taste, not a test suite, which is why it can be flattered. Line: "Which judge would you trust not to be flattered: a model of what people like, or your test suite?"</p>
+    <p>Press 5, DeepSeek-R1: trained with rewards a rule can check, right maths answers and passing code, using GRPO, the group and average method from step 8. Longer reasoning and self-checking emerged on their own; the paper calls one moment an aha moment. Line: "Eight answers, compare to the average, nudge the winners. That is how one of 2025's best-known reasoning models was trained."</p>
+    <p>Press 6, CoastRunners: OpenAI's boat-racing agent was paid points for hitting targets. It found a lagoon, circled forever crashing and catching fire, never finished, and still outscored humans. Coding agents do the same today: reported cases include rewriting a verify function to always return true. Line: "When my model could forge the test report, I was in good company."</p>
+  </aside>
+</section>
+
+<section class="slide" data-section="Real world" data-title="Thank you" data-dur="40" data-steps="2">
+  <div class="panes">
+  <div class="pane center" data-s="0" data-pane="Thank you">
+  <div class="kicker" style="justify-content:center">Thank you</div>
+  <p class="statement" style="max-inline-size:26ch">A test suite is not just a safety net. It is a reward function.</p>
+  <div class="chips" data-s="1" style="justify-content:center">
+    <span class="chip"><i data-i="user"></i>Bhushan Gaikwad</span>
+    <span class="chip">@rckstrbhushan</span>
+    <span class="chip">github.com/Bhushan</span>
+  </div>
+  <p class="sub" data-s="2" style="max-inline-size:60ch">Questions, objections and war stories welcome.</p>
+
+  </div>
+  </div>
+  <aside class="notes" data-pane-start="0">
+    <p><strong>0:40.</strong> Land the line, then open the floor.</p>
+    <p>Likely questions: why not just fine-tune on good code (you can, it is the first stage); does it need a GPU (training does, evaluation runs on a laptop); can it cheat (yes, I found two ways). To jump back to a step, open the overview with Esc or the section map with M.</p>
+  </aside>
+</section>

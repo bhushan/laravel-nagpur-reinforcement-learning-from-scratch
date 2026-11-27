@@ -1,0 +1,472 @@
+/* ============================================================ 2. TOKENS
+   Apparatus dark, lifted verbatim from @alfredscholar/tokens.
+   The deck is presented in a dim room, so it pins the dark theme rather
+   than following the operating system. */
+:root {
+  color-scheme: dark;
+
+  /* --- voices ------------------------------------------------------- */
+  --alfred-font-family-sans: 'Geist Variable', Geist, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --alfred-font-family-serif: 'Fraunces Variable', 'Fraunces', 'Iowan Old Style', Charter, Georgia, serif;
+  --alfred-font-family-mono: 'Geist Mono Variable', 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --alfred-font-weight-regular: 400;
+  --alfred-font-weight-medium: 500;
+  --alfred-font-weight-semibold: 600;
+
+  --alfred-font-tracking-tighter: -0.036em;
+  --alfred-font-tracking-tight: -0.022em;
+  --alfred-font-tracking-caps: 0.07em;
+  --alfred-font-leading-tight: 1.15;
+  --alfred-font-leading-snug: 1.3;
+  --alfred-font-leading-normal: 1.5;
+  --alfred-font-leading-relaxed: 1.6;
+
+  /* --- scale --------------------------------------------------------- */
+  --alfred-spacing-2: 0.125rem;
+  --alfred-spacing-4: 0.25rem;
+  --alfred-spacing-6: 0.375rem;
+  --alfred-spacing-8: 0.5rem;
+  --alfred-spacing-10: 0.625rem;
+  --alfred-spacing-12: 0.75rem;
+  --alfred-spacing-16: 1rem;
+  --alfred-spacing-20: 1.25rem;
+  --alfred-spacing-24: 1.5rem;
+  --alfred-spacing-32: 2rem;
+  --alfred-spacing-40: 2.5rem;
+  --alfred-spacing-48: 3rem;
+  --alfred-spacing-64: 4rem;
+  --alfred-spacing-80: 5rem;
+
+  --alfred-radius-xs: 0.125rem;
+  --alfred-radius-sm: 0.25rem;
+  --alfred-radius-md: 0.375rem;
+  --alfred-radius-lg: 0.5rem;
+  --alfred-radius-pill: 9999px;
+  --alfred-radius-circle: 50%;
+
+  --alfred-border-width-hairline: 1px;
+  --alfred-border-width-strong: 1.5px;
+  --alfred-border-width-marker: 3px;
+
+  /* --- motion, read by the GSAP layer -------------------------------- */
+  --alfred-motion-duration-fast: 120ms;
+  --alfred-motion-duration-normal: 200ms;
+  --alfred-motion-duration-slow: 320ms;
+  --alfred-motion-duration-deliberate: 480ms;
+  --alfred-motion-easing-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --alfred-motion-easing-in: cubic-bezier(0.55, 0.06, 0.68, 0.19);
+  --alfred-motion-easing-in-out: cubic-bezier(0.65, 0.05, 0.36, 1);
+  --alfred-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+  /* --- colour, Apparatus dark ---------------------------------------- */
+  --alfred-color-background: #141516;
+  --alfred-color-background-subtle: #242426;
+  --alfred-color-background-sunken: #0a0b0c;
+  --alfred-color-surface: #242426;
+  --alfred-color-surface-raised: #313234;
+  --alfred-color-surface-subtle: #141516;
+  --alfred-color-surface-sunken: #0a0b0c;
+  --alfred-color-surface-hover: #313234;
+
+  --alfred-color-text: #f2f3f5;
+  --alfred-color-text-secondary: #d3d5d8;
+  --alfred-color-text-muted: #b9babe;
+  --alfred-color-text-disabled: #78797d;
+  --alfred-color-text-inverse: #0a0b0c;
+
+  --alfred-color-border: #3f4043;
+  --alfred-color-border-subtle: #242426;
+  --alfred-color-border-strong: #5a5b5e;
+  --alfred-color-border-control: #78797d;
+
+  --alfred-color-primary: #2259e4;
+  --alfred-color-primary-subtle: #091e52;
+  --alfred-color-primary-border: #163d9f;
+  --alfred-color-primary-text: #a0bfff;
+  --alfred-color-primary-foreground: #ffffff;
+
+  --alfred-color-evidence: #6898ff;
+  --alfred-color-evidence-rule: #2259e4;
+  --alfred-color-evidence-subtle: #091e52;
+  --alfred-color-evidence-border: #163d9f;
+  --alfred-color-evidence-text: #a0bfff;
+  --alfred-color-evidence-highlight: #0f2d78;
+  --alfred-color-evidence-highlight-strong: #163d9f;
+
+  --alfred-color-success: #54c072;
+  --alfred-color-success-text: #84d897;
+  --alfred-color-success-subtle: #042910;
+  --alfred-color-success-border: #115327;
+  --alfred-color-warning: #ecaa41;
+  --alfred-color-warning-text: #f6c278;
+  --alfred-color-warning-subtle: #3b2603;
+  --alfred-color-warning-border: #744d00;
+  --alfred-color-danger: #f77165;
+  --alfred-color-danger-text: #f9a49a;
+  --alfred-color-danger-subtle: #400505;
+  --alfred-color-danger-border: #7a1313;
+  --alfred-color-info-text: #77caf1;
+
+  --alfred-color-focus: #2f6bff;
+  --alfred-color-selection: #0f2d78;
+  --alfred-color-overlay: rgba(11, 13, 12, 0.8);
+
+  --alfred-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --alfred-shadow-md: 0 1px 2px 0 rgba(0, 0, 0, 0.4), 0 4px 10px -2px rgba(0, 0, 0, 0.55);
+  --alfred-shadow-lg: 0 2px 4px 0 rgba(0, 0, 0, 0.4), 0 12px 28px -6px rgba(0, 0, 0, 0.55);
+  --alfred-shadow-focus: 0 0 0 2px #141516, 0 0 0 4px #2f6bff;
+
+  /* --- deck layer ----------------------------------------------------
+     A presentation is a display context, so the type runs larger than the
+     application scale. These compose the tokens above rather than replacing
+     them: change the root font-size and the whole deck re-flows. */
+  --deck-gutter: 5rem;
+  --deck-gutter-y: 3.6rem;
+  --deck-rail: 2.5rem;
+}
+
+/* ============================================================ 3. RESET */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  /* One knob. Every size in the deck is a rem, so this scales the lot. */
+  font-size: clamp(12px, 0.58vw + 0.70vh, 22px);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--alfred-color-background);
+  color: var(--alfred-color-text);
+  font-family: var(--alfred-font-family-sans);
+  font-size: 1rem;
+  font-weight: var(--alfred-font-weight-regular);
+  line-height: var(--alfred-font-leading-normal);
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  font-optical-sizing: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+::selection { background-color: var(--alfred-color-selection); }
+
+/* The only ground treatment in the deck: a single hairline, running the full
+   height of the inline-start gutter. It is the critical apparatus band the
+   system is named for, and it is the reason the canvas needs no gradient. */
+body::before {
+  content: '';
+  position: fixed;
+  inset-block: 0;
+  inset-inline-start: calc(var(--deck-gutter) - var(--alfred-spacing-32));
+  inline-size: var(--alfred-border-width-hairline);
+  background-color: var(--alfred-color-border-subtle);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================ 4. DECK */
+.deck {
+  position: relative;
+  block-size: 100vh;
+  block-size: 100dvh;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  padding: var(--deck-gutter-y) var(--deck-gutter) calc(var(--deck-rail) + 2.2rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--alfred-spacing-24);
+  /* GSAP owns opacity and transform. Visibility is the only thing CSS holds,
+     so a slide that has never been animated cannot catch a stray click. */
+  opacity: 0;
+  visibility: hidden;
+}
+.slide.active { visibility: visible; }
+.slide.center { align-items: center; text-align: center; }
+.notes { display: none; }
+
+/* ============================================================ 5. TYPE
+   Geist operates the deck. Fraunces is reserved for the one line on a slide
+   you are meant to sit with. Geist Mono identifies. */
+
+/* The eyebrow. A siglum for the slide: a marker rule in the pigment and a
+   monospace label. Not a coloured pill, and it does not glow. */
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: var(--alfred-spacing-10);
+  font-family: var(--alfred-font-family-mono);
+  font-size: 0.78rem;
+  font-weight: var(--alfred-font-weight-medium);
+  letter-spacing: var(--alfred-font-tracking-caps);
+  line-height: var(--alfred-font-leading-snug);
+  text-transform: uppercase;
+  color: var(--alfred-color-text-muted);
+}
+.kicker::before {
+  content: '';
+  inline-size: var(--alfred-border-width-marker);
+  block-size: 0.92em;
+  border-radius: var(--alfred-radius-xs);
+  background-color: var(--alfred-color-evidence-rule);
+  flex: none;
+}
+.kicker.red::before { background-color: var(--alfred-color-danger); }
+
+.gen {
+  font-family: var(--alfred-font-family-mono);
+  font-size: 0.78rem;
+  letter-spacing: var(--alfred-font-tracking-caps);
+  color: var(--alfred-color-evidence-text);
+}
+
+h1 {
+  font-size: 5.2rem;
+  font-weight: var(--alfred-font-weight-semibold);
+  line-height: 1.02;
+  letter-spacing: var(--alfred-font-tracking-tighter);
+  text-wrap: balance;
+}
+h2 {
+  font-size: 2.9rem;
+  font-weight: var(--alfred-font-weight-semibold);
+  line-height: var(--alfred-font-leading-tight);
+  letter-spacing: var(--alfred-font-tracking-tighter);
+  text-wrap: balance;
+}
+h3 {
+  font-size: 1.42rem;
+  font-weight: var(--alfred-font-weight-semibold);
+  line-height: var(--alfred-font-leading-snug);
+  letter-spacing: var(--alfred-font-tracking-tight);
+}
+
+/* The reading voice. Fraunces on its optical-size axis, so it is redrawn for
+   the size it is set at. This is the line the room is supposed to dwell on. */
+.lede {
+  font-family: var(--alfred-font-family-serif);
+  font-optical-sizing: auto;
+  font-size: 2.05rem;
+  font-weight: var(--alfred-font-weight-regular);
+  line-height: var(--alfred-font-leading-snug);
+  letter-spacing: var(--alfred-font-tracking-tight);
+  color: var(--alfred-color-text);
+  max-inline-size: 30ch;
+  text-wrap: pretty;
+}
+.lede.wide { max-inline-size: 42ch; }
+
+.sub {
+  font-size: 1.22rem;
+  line-height: var(--alfred-font-leading-relaxed);
+  color: var(--alfred-color-text-muted);
+  max-inline-size: 52ch;
+  text-wrap: pretty;
+}
+.small {
+  font-size: 0.92rem;
+  line-height: var(--alfred-font-leading-normal);
+  color: var(--alfred-color-text-muted);
+}
+.mono { font-family: var(--alfred-font-family-mono); }
+
+/* The chromatic voice, spent only on the trail back to a source. */
+.acc { color: var(--alfred-color-evidence-text); }
+.cy  { color: var(--alfred-color-info-text); }
+.red { color: var(--alfred-color-danger-text); }
+.ok  { color: var(--alfred-color-success-text); }
+.warn { color: var(--alfred-color-warning-text); }
+.dim  { color: var(--alfred-color-text-muted); }
+.dim2 { color: var(--alfred-color-text-disabled); }
+
+/* Emphasis is a rule under the phrase, in the pigment. Never a marker pen. */
+.hl {
+  padding-inline: 0.1em;
+  background-color: var(--alfred-color-evidence-subtle);
+  box-shadow: inset 0 -0.1em 0 var(--alfred-color-evidence);
+  border-radius: var(--alfred-radius-xs);
+  /* Without this, a phrase that wraps gets its padding and rule on the first
+     fragment only, and the second line reads as a different kind of mark. */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.footer {
+  position: absolute;
+  inset-inline: var(--deck-gutter);
+  inset-block-end: calc(var(--deck-rail) + 0.5rem);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--alfred-spacing-16);
+  padding-block-start: var(--alfred-spacing-8);
+  border-block-start: var(--alfred-border-width-hairline) solid var(--alfred-color-border-subtle);
+  font-family: var(--alfred-font-family-mono);
+  font-size: 0.7rem;
+  font-weight: var(--alfred-font-weight-medium);
+  letter-spacing: var(--alfred-font-tracking-caps);
+  text-transform: uppercase;
+  color: var(--alfred-color-text-disabled);
+}
+
+/* ============================================================ 6. LAYOUT */
+.row   { display: flex; gap: var(--alfred-spacing-32); align-items: center; }
+.cols  { display: grid; grid-template-columns: 1fr 1fr; gap: var(--alfred-spacing-40); align-items: center; }
+.cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--alfred-spacing-20); }
+.cols-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--alfred-spacing-16); }
+.split { display: grid; grid-template-columns: 1.05fr 1fr; gap: var(--alfred-spacing-48); align-items: center; min-block-size: 0; }
+.split.rev { grid-template-columns: 1fr 1.05fr; }
+.stack { display: flex; flex-direction: column; gap: var(--alfred-spacing-16); }
+/* A figure block. It shrinks to its content and lets the slide centre the
+   whole column: stretching it to fill instead pins the heading to the top and
+   strands the figure in the middle of an empty frame. */
+.grow  { flex: 0 1 auto; min-block-size: 0; display: flex; flex-direction: column; justify-content: center; }
+.center-x { align-items: center; text-align: center; justify-content: center; }
+
+/* ============================================================ 7. SURFACES
+   One elevation per context, and every surface keeps its hairline. The rule
+   defines the edge; there is no shadow, because a deck of shadowed panels is
+   a deck of noise. */
+.panel {
+  background-color: var(--alfred-color-surface);
+  border: var(--alfred-border-width-hairline) solid var(--alfred-color-border);
+  border-radius: var(--alfred-radius-md);
+  padding: var(--alfred-spacing-20) var(--alfred-spacing-24);
+}
+.panel.tight { padding: var(--alfred-spacing-12) var(--alfred-spacing-16); }
+.panel .ph {
+  font-family: var(--alfred-font-family-mono);
+  font-size: 0.7rem;
+  font-weight: var(--alfred-font-weight-medium);
+  letter-spacing: var(--alfred-font-tracking-caps);
+  text-transform: uppercase;
+  color: var(--alfred-color-text-muted);
+  margin-block-end: var(--alfred-spacing-10);
+  padding-block-end: var(--alfred-spacing-8);
+  border-block-end: var(--alfred-border-width-hairline) solid var(--alfred-color-border-subtle);
+}
+/* Verdict panels. A marker rule on the leading edge and a tinted border, on
+   the ordinary surface. Filling a half-slide panel with the alert tint reads
+   as a warning about the whole slide rather than about the panel. */
+.panel.bad, .panel.good, .panel.acc { background-color: var(--alfred-color-surface); }
+.panel.bad  { border-color: var(--alfred-color-danger-border);   border-inline-start: var(--alfred-border-width-marker) solid var(--alfred-color-danger); }
+.panel.good { border-color: var(--alfred-color-success-border);  border-inline-start: var(--alfred-border-width-marker) solid var(--alfred-color-success); }
+.panel.acc  { border-color: var(--alfred-color-evidence-border); border-inline-start: var(--alfred-border-width-marker) solid var(--alfred-color-evidence); }
+.panel.bad .ph  { color: var(--alfred-color-danger-text); }
+.panel.good .ph { color: var(--alfred-color-success-text); }
+.panel.acc .ph  { color: var(--alfred-color-evidence-text); }
+
+/* ============================================================ 8. CODE
+   The one place the system spends more than one hue, for the same reason a
+   chart does: this is data, and the colour is the classification. Every value
+   is a dark-theme token, none is hand-picked. */
+.win {
+  border: var(--alfred-border-width-hairline) solid var(--alfred-color-border);
+  border-radius: var(--alfred-radius-lg);
+  background-color: var(--alfred-color-surface-sunken);
+  overflow: hidden;
+  box-shadow: var(--alfred-shadow-lg);
+}
+.win-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--alfred-spacing-6);
+  padding: var(--alfred-spacing-8) var(--alfred-spacing-12);
+  background-color: var(--alfred-color-surface);
+  border-block-end: var(--alfred-border-width-hairline) solid var(--alfred-color-border);
+}
+.dot { inline-size: 0.58rem; block-size: 0.58rem; border-radius: var(--alfred-radius-circle); background-color: var(--alfred-color-border-control); }
+.win-name {
+  font-family: var(--alfred-font-family-mono);
+  font-size: 0.76rem;
+  color: var(--alfred-color-text-muted);
+  margin-inline-start: var(--alfred-spacing-8);
+}
+.win-tag {
+  margin-inline-start: auto;
+  font-family: var(--alfred-font-family-mono);
+  font-size: 0.66rem;
+  font-weight: var(--alfred-font-weight-medium);
+  letter-spacing: var(--alfred-font-tracking-caps);
+  text-transform: uppercase;
+  color: var(--alfred-color-text-disabled);
+}
+.win pre {
+  margin: 0;
+  padding: var(--alfred-spacing-16) var(--alfred-spacing-20);
+  font-family: var(--alfred-font-family-mono);
+  font-size: 0.92rem;
+  line-height: var(--alfred-font-leading-relaxed);
+  overflow: hidden;
+  white-space: pre;
+  color: var(--alfred-color-text-secondary);
+}
+.win pre .ln {
+  color: var(--alfred-color-text-disabled);
+  display: inline-block;
+  inline-size: 1.6rem;
+  user-select: none;
+}
+.tok-k { color: var(--alfred-color-evidence-text); }
+.tok-s { color: var(--alfred-color-success-text); }
+.tok-v { color: var(--alfred-color-info-text); }
+.tok-c { color: var(--alfred-color-text-disabled); font-style: italic; }
+.tok-f { color: var(--alfred-color-warning-text); }
+.tok-n { color: var(--alfred-color-warning-text); }
+.tok-p { color: var(--alfred-color-text-muted); }
+
+/* A highlighted line is marked by the apparatus rule, not by a fill. */
+.win pre em {
+  font-style: normal;
+  display: block;
+  background-color: var(--alfred-color-evidence-subtle);
+  box-shadow: inset var(--alfred-border-width-marker) 0 0 var(--alfred-color-evidence-rule);
+  margin-inline: calc(var(--alfred-spacing-20) * -1);
+  padding-inline: var(--alfred-spacing-20);
+}
+pre.hl-line { background-color: var(--alfred-color-evidence-subtle); }
+
+/* ============================================================ 9. TERMINAL */
+.term {
+  border: var(--alfred-border-width-hairline) solid var(--alfred-color-border);
+  border-radius: var(--alfred-radius-lg);
+  background-color: var(--alfred-color-surface-sunken);
+  overflow: hidden;
+}
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--alfred-spacing-6);
+  padding: var(--alfred-spacing-8) var(--alfred-spacing-12);
+  background-color: var(--alfred-color-surface);
+  border-block-end: var(--alfred-border-width-hairline) solid var(--alfred-color-border);
+  font-family: var(--alfred-font-family-mono);
+  font-size: 0.74rem;
+  color: var(--alfred-color-text-muted);
+}
+.term pre {
+  margin: 0;
+  padding: var(--alfred-spacing-16) var(--alfred-spacing-20);
+  font-family: var(--alfred-font-family-mono);
+  font-size: 0.92rem;
+  line-height: var(--alfred-font-leading-relaxed);
+  color: var(--alfred-color-text-secondary);
+  white-space: pre;
+}
+.cursor {
+  display: inline-block;
+  inline-size: 0.55em;
+  block-size: 1.05em;
+  background-color: var(--alfred-color-evidence);
+  vertical-align: -0.16em;
+  animation: blink 1.05s steps(2) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+

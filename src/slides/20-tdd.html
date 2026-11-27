@@ -1,0 +1,69 @@
+<section class="slide" data-section="TDD" data-title="TDD: one lap, live" data-dur="240" data-steps="13">
+  <div class="panes">
+  <div class="pane" data-s="0" data-until="5" data-pane="The loop">
+  <div class="split wide-r top">
+    <div class="stack gap-l">
+      <div class="head"><div class="kicker" data-s="1">Act 1 · Test-driven development</div><h2 data-s="1">TDD is a loop with a judge in it.</h2></div>
+      <ul class="clean">
+        <li data-s="2"><b class="bad">Red.</b> Write a test for behaviour that does not exist yet. Watch it fail.</li>
+        <li data-s="3"><b class="good">Green.</b> Write the smallest code that makes it pass. Nothing clever.</li>
+        <li data-s="4"><b class="acc">Refactor.</b> Clean it up. The test tells you if you broke anything.</li>
+      </ul>
+      <p class="statement" data-s="5">The test comes first, so it cannot be bent to fit the code.</p>
+    </div>
+    <div data-s="1 fade">
+      <svg viewBox="0 0 520 440" style="width:100%;max-width:40rem;height:auto" aria-label="The red, green, refactor cycle">
+        <defs><marker id="tddArrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0L8 4.5L0 9z" fill="var(--alfred-color-border-control)"/></marker></defs>
+        <path class="wire" marker-end="url(#tddArrow)" d="M300 88 C410 110 440 200 420 262"/>
+        <path class="wire" marker-end="url(#tddArrow)" d="M360 340 C300 392 220 392 160 340"/>
+        <path class="wire" marker-end="url(#tddArrow)" d="M100 262 C80 200 110 110 220 88"/>
+        <circle r="6" fill="var(--alfred-color-info-text)"><animateMotion dur="7s" repeatCount="indefinite" path="M260 70 C410 110 440 200 420 290 C360 410 160 410 100 290 C80 200 110 110 260 70"/></circle>
+        <g data-s="2"><rect class="box no" x="170" y="40" width="180" height="62" rx="10"/><text x="260" y="68" text-anchor="middle" font-size="16" font-weight="600" style="fill:var(--alfred-color-danger-text)">RED</text><text x="260" y="88" text-anchor="middle" font-size="12" class="dim">test fails</text></g>
+        <g data-s="3"><rect class="box ok" x="340" y="262" width="170" height="62" rx="10"/><text x="425" y="290" text-anchor="middle" font-size="16" font-weight="600" style="fill:var(--alfred-color-success-text)">GREEN</text><text x="425" y="310" text-anchor="middle" font-size="12" class="dim">test passes</text></g>
+        <g data-s="4"><rect class="box acc" x="10" y="262" width="170" height="62" rx="10"/><text x="95" y="290" text-anchor="middle" font-size="16" font-weight="600" style="fill:var(--alfred-color-evidence-text)">REFACTOR</text><text x="95" y="310" text-anchor="middle" font-size="12" class="dim">still passes</text></g>
+        <text x="260" y="238" text-anchor="middle" font-size="12" class="dim">repeat, for every requirement</text>
+      </svg>
+    </div>
+  </div>
+
+  </div>
+  <div class="pane" data-s="6" data-pane="Live kata">
+  <div class="head"><div class="kicker">Watch one lap</div><h2 class="wide">Put a product in a cart, test first.</h2></div>
+  <div data-widget="tddkata" data-from="6"></div>
+  <p class="demo-hint">Real test names from the project we meet in the last act.</p>
+
+  </div>
+  </div>
+  <aside class="notes" data-pane-start="0">
+    <p><strong>0:50.</strong> Everyone in this room has done this, so go fast. Red: write the test, watch it fail. Green: smallest code to pass. Refactor: tidy up while the tests guard you.</p>
+    <p>The line to land: the test comes first, so it cannot be bent to fit the code. That independence is what makes the verdict trustworthy. Hold that thought, it returns in the reward function.</p>
+    <p>Point at the dot circling the loop. It never stops. Every new requirement starts another lap.</p>
+  </aside>
+  <aside class="notes" data-pane-start="6">
+    <p><strong>2:10, seven steps, about 18 seconds each.</strong> Press forward once per beat and narrate it.</p>
+    <p>1. The test exists before any code. 2. Run it: red, a 404 because no route exists. 3. Smallest code that could pass. 4. Green. 5. New requirement, new failing test: repeat adds should merge, so this time the naive code fails with two lines instead of one. 6. Fix, green. 7. Refactor with the tests as a net.</p>
+    <p>Say clearly at step 4: we never explained to the test how the code works. It only judges. Remember this exact test, it is the reward later.</p>
+    <p>Do not type anything live. The animation is the demo.</p>
+  </aside>
+</section>
+
+<section class="slide" data-section="TDD" data-title="Why it works" data-dur="60" data-steps="5">
+  <div class="panes">
+  <div class="pane" data-s="0" data-pane="The judge">
+  <div class="head"><div class="kicker" data-s="1">Why it works</div><h2 data-s="1" class="wide">Three properties make a test a good judge.</h2></div>
+  <div class="cols c3">
+    <div class="panel good" data-s="2"><div class="ph">Objective</div><p class="big">Pass or fail.</p><p class="sub">No opinions, no mood, no "looks fine to me".</p></div>
+    <div class="panel good" data-s="3"><div class="ph">Automatic</div><p class="big">Seconds, no human.</p><p class="sub">Nobody has to read the code to know the verdict.</p></div>
+    <div class="panel good" data-s="4"><div class="ph">Repeatable</div><p class="big">Same code, same verdict.</p><p class="sub">Run it a thousand times and it never changes its mind.</p></div>
+  </div>
+  <div class="panel acc" data-s="5"><div class="ph">Keep these three words</div><p class="lede wide" style="max-inline-size:60ch">A judge that is objective, automatic and repeatable can score a million attempts without getting tired. That is the entire requirement for a reward.</p></div>
+
+  </div>
+  </div>
+  <aside class="notes" data-pane-start="0">
+    <p><strong>1:00.</strong> Slow down on each card, one sentence each.</p>
+    <p>Objective: the test does not care about style or effort. Automatic: it runs without a human. Repeatable: no flakiness, or the signal is noise.</p>
+    <p>Then the bridge sentence: a judge with these three properties can score a million attempts without getting tired. In reinforcement learning we call what the judge hands back a reward. Write the three words in your head: objective, automatic, repeatable.</p>
+    <p>Aside if asked: flaky tests are poison for exactly this reason. We will see a version of that when a model learns to cheat the judge.</p>
+  </aside>
+</section>

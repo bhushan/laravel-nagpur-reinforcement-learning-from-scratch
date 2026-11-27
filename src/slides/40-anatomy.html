@@ -1,0 +1,314 @@
+<section class="slide" data-section="Anatomy of RL" data-title="Anatomy 1: task to answer" data-dur="490" data-steps="30">
+  <div class="panes">
+  <div class="pane" data-s="0" data-until="10" data-pane="Overview">
+  <div class="head"><div class="kicker" data-s="1">Act 3 · Anatomy of RL</div><h2 data-s="1" class="wide">One lap of training has ten steps. We open each one.</h2></div>
+  <div class="stages">
+    <div class="stg" data-s="1"><b>1</b><span class="nm">Task</span><span class="ds">a ticket with hidden tests</span></div>
+    <div class="stg" data-s="2"><b>2</b><span class="nm">Prompt</span><span class="ds">what the model reads</span></div>
+    <div class="stg" data-s="3"><b>3</b><span class="nm">Policy</span><span class="ds">the model picks tokens</span></div>
+    <div class="stg" data-s="4"><b>4</b><span class="nm">Answer</span><span class="ds">tokens become files</span></div>
+    <div class="stg" data-s="5"><b>5</b><span class="nm">Sandbox</span><span class="ds">run the tests, safely</span></div>
+    <div class="stg" data-s="6"><b>6</b><span class="nm">Reward</span><span class="ds">test results become a number</span></div>
+    <div class="stg" data-s="7"><b>7</b><span class="nm">Group</span><span class="ds">many attempts at one task</span></div>
+    <div class="stg" data-s="8"><b>8</b><span class="nm">Advantage</span><span class="ds">better or worse than its siblings</span></div>
+    <div class="stg" data-s="9"><b>9</b><span class="nm">Update</span><span class="ds">nudge the model toward winners</span></div>
+    <div class="stg" data-s="10"><b>10</b><span class="nm">Repeat</span><span class="ds">thousands of laps</span></div>
+  </div>
+  <p class="sub" data-s="10">For each step: what goes in, what comes out, and a real file from the project.</p>
+
+  </div>
+  <div class="pane" data-s="11" data-until="16" data-pane="1 Task">
+  <div class="tracker" data-now="1"></div>
+  <div class="head"><div class="kicker">Step 1 of 10 · Task</div><h2 class="wide">A task is a ticket plus a grader the model never sees.</h2></div>
+  <div class="split even top">
+    <div class="stack gap-s">
+      <div class="io">
+        <div><div class="lab">In</div><div class="bodyx">A working Laravel shop app, and an issue written like a real ticket.</div></div>
+        <div class="out"><div class="lab">Out</div><div class="bodyx">A task folder: the issue, the files to show, and hidden tests.</div></div>
+      </div>
+      <div class="win">
+        <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="win-name">tasks/laravel/cart-add-001/task.json</span></div>
+        <pre data-lang="json">
+{
+  "id": "cart-add-001",
+  "split": "train",
+  "expected_tests": 13,   @@2
+  "show": ["routes/api.php", "app/Models/Product.php", "..."],   @@3
+  "prompt": "Customers should be able to put products in a cart ..."   @@4
+}
+        </pre>
+      </div>
+    </div>
+    <div class="stack gap-s">
+      <div class="panel" data-s="13"><div class="ph">expected_tests: 13</div><p>The shop already has 8 tests. This task adds 5 more. A run only counts if exactly 13 tests ran.</p></div>
+      <div class="panel" data-s="14"><div class="ph">show</div><p>The files the model may read. The rest of the app is invisible to it.</p></div>
+      <div class="panel" data-s="15"><div class="ph">prompt</div><p>The issue. It describes behaviour, never the code to write.</p></div>
+      <div class="win" data-s="16">
+        <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="win-name">hidden/tests/Feature/CartAddTest.php, never shown</span></div>
+        <pre data-lang="php">
+it('rejects a quantity below one', function () {
+    $mug = Product::factory()->create();
+
+    $this->postJson('/api/carts/ada@example.com/items', [
+            'product_id' => $mug->id,
+            'quantity' => 0,
+        ])
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors('quantity');
+});
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <div class="pane" data-s="17" data-until="21" data-pane="2 Prompt">
+  <div class="tracker" data-now="2"></div>
+  <div class="head"><div class="kicker">Step 2 of 10 · Prompt</div><h2 class="wide">The prompt is the only thing the model knows about the task.</h2></div>
+  <div class="split even top">
+    <div class="win">
+      <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="win-name">build_prompt(task), shortened</span></div>
+      <pre data-lang="text">
+You are working on a Laravel 13 shop API (Pest tests, SQLite).
+
+ISSUE:   @@2
+Customers should be able to put products in a shopping   @@2
+cart before ordering. Add this endpoint: ...   @@2
+
+These are the current versions of the relevant files:   @@3
+FILE: routes/api.php   @@3
+...the 4 to 5 files from "show", whole files...   @@3
+
+Reply with the COMPLETE new content of every file you   @@4
+create or change, in exactly this format: FILE: path   @@4
+Do not change anything under tests/.   @@4
+      </pre>
+    </div>
+    <div class="stack gap-s">
+      <div class="io">
+        <div><div class="lab">In</div><div class="bodyx">The task: issue, visible files, answer format.</div></div>
+        <div class="out"><div class="lab">Out</div><div class="bodyx">One block of text, 843 to 1,695 tokens across the first four tasks.</div></div>
+      </div>
+      <div class="cols c2">
+        <div class="panel good" data-s="19"><div class="ph">Goes in</div><ul class="clean"><li>The issue</li><li>The files it may read</li><li>The answer format</li></ul></div>
+        <div class="panel bad" data-s="21"><div class="ph">Stays out</div><ul class="clean red"><li>The hidden tests</li><li>The reference solution</li><li>How the grader works</li></ul></div>
+      </div>
+      <p class="sub" data-s="20">In RL language, this is the <b>state</b>. A token is a small chunk of text, a few characters. The model reads tokens, not words.</p>
+    </div>
+  </div>
+
+  </div>
+  <div class="pane" data-s="22" data-until="26" data-pane="3 Policy">
+  <div class="tracker" data-now="3"></div>
+  <div class="head"><div class="kicker">Step 3 of 10 · Policy</div><h2 class="wide">The model does not write code. It picks the next token, one at a time.</h2></div>
+  <div data-widget="tokenpolicy" data-from="22"></div>
+
+  </div>
+  <div class="pane" data-s="27" data-pane="4 Answer">
+  <div class="tracker" data-now="4"></div>
+  <div class="head"><div class="kicker">Step 4 of 10 · Answer</div><h2 class="wide">Thousands of token choices become a set of files.</h2></div>
+  <div class="split even top">
+    <div class="win">
+      <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="win-name">the model's raw answer, cart-update-001</span><span class="win-tag">real run</span></div>
+      <pre data-lang="text">
+I'll update the `CartController` to handle the new endpoint ...
+
+FILE: app/Http/Controllers/CartController.php
+```php
+&lt;?php
+namespace App\Http\Controllers;
+...
+FILE: app/Models/CartItem.php
+...
+FILE: app/Models/Product.php
+...
+FILE: app/Http/Requests/CartItemRequest.php   @@3
+FILE: app/Http/Requests/CartItemRequest.php   @@3
+FILE: app/Http/Requests/CartItemRequest.php   @@3
+...13 times in total...   @@3
+      </pre>
+    </div>
+    <div class="stack gap-s">
+      <div class="io">
+        <div><div class="lab">In</div><div class="bodyx">A long string of tokens, up to 3,000 in my runs.</div></div>
+        <div class="out"><div class="lab">Out</div><div class="bodyx">A dictionary of files: path to contents.</div></div>
+      </div>
+      <div class="panel acc" data-s="29"><div class="ph">parse_files(answer)</div>
+<pre class="code" style="padding:.4rem 0;font-size:.8rem">{
+  "app/Http/Controllers/CartController.php": "...",
+  "app/Models/CartItem.php": "...",
+  "app/Models/Product.php": "...",
+  "app/Http/Requests/CartItemRequest.php": "..."
+}</pre>
+        <p class="tiny">If a path appears twice, the later copy wins. Whatever does not parse is a score of zero.</p>
+      </div>
+      <div class="panel warn" data-s="30"><div class="ph">What the saved answer shows</div><p>This small model wrote the same file 13 times and ran out of room. That is a policy that needs training, in plain sight.</p></div>
+    </div>
+  </div>
+
+  </div>
+  </div>
+  <aside class="notes" data-pane-start="0">
+    <p><strong>1:00, ten presses.</strong> This is the map for the next twenty minutes. Reveal one stage per press and read its name and one-liner.</p>
+    <p>Group the ten in your head as: the world (task, prompt), the learner (policy, answer), the judge (sandbox, reward), the learning (group, advantage, update), and the repetition.</p>
+    <p>Tell the room the rule for every slide: an In panel and an Out panel, so you can always see exactly what goes in and what comes out. The small tracker at the top shows where we are.</p>
+  </aside>
+  <aside class="notes" data-pane-start="11">
+    <p><strong>1:40, five steps.</strong> Same cart test you watched go red and green in the TDD act. Now it is the grader.</p>
+    <p>Step 2: expected_tests is 13: the shop's 8 existing tests plus 5 new. We insist exactly 13 ran, you will see why in the reward step. Step 3: show is the model's window into the codebase. Step 4: the prompt is a ticket, behaviour only. Step 5: the hidden test. The model never sees it.</p>
+    <p>How I make tasks: take working code, remove one feature, keep its tests. The removed code becomes the reference solution, the tests become the hidden grader. A planted bug is the same trick in reverse: break a file, keep the test that catches it.</p>
+    <p>Real project facts: 7 tasks so far, 5 train and 2 test, provisional split.</p>
+  </aside>
+  <aside class="notes" data-pane-start="17">
+    <p><strong>1:20.</strong> Everything the model knows about the task is this one block of text. There is no other channel.</p>
+    <p>Step 2: the issue. Step 3: the files it may read, whole files, because small models are bad at diffs and I want to measure Laravel skill, not diff formatting. Step 4: the format rules, and what is deliberately absent: the tests, the solution, any hint about the grader.</p>
+    <p>If it could see the tests it would just memorise them. Same reason you do not show candidates the interview answer key.</p>
+    <p>Token length: 843 to 1,695 across my first four tasks, measured.</p>
+  </aside>
+  <aside class="notes" data-pane-start="22">
+    <p><strong>2:10, four steps.</strong> This is the heart of the policy. A language model is a function: all the text so far goes in, a probability for every possible next token comes out. The set of those probabilities is the policy.</p>
+    <p>Step 1: the bars. These probabilities are illustrative, but the shape is real: a few likely tokens and a long tail. A real model chooses among roughly a hundred and fifty thousand tokens at every position.</p>
+    <p>Step 2: temperature. Low is cautious, always the favourite. High is adventurous. This is the exploration dial from the previous act. Step 3: sample. Same prompt, different answers. That diversity is what lets RL find a better attempt. Step 4: the punchline: training changes these bars. That is all learning is here.</p>
+    <p>Our student model is a small open model, Qwen3 1.7B, running locally on a laptop.</p>
+  </aside>
+  <aside class="notes" data-pane-start="27">
+    <p><strong>1:10.</strong> The answer is the whole sequence of token choices from the previous slide, a thousand or more, until the model stops or hits the cap.</p>
+    <p>Then we need structure: the parser turns the text into a dictionary of path to contents. If nothing parses, the answer scores zero. A bad answer must never crash training.</p>
+    <p>This is a real saved answer from my baseline run on cart-update. Notice the model wrote CartItemRequest.php thirteen times. Nothing wrong with the parser: the model looped.</p>
+    <p>Lesson from my own run: the very first evaluation scored 0 of 4 only because my parser rejected a header written as bold FILE. Always read saved answers before trusting a score. I learned that twice, once with code fences and once with this.</p>
+  </aside>
+</section>
+
+<section class="slide" data-section="Anatomy of RL" data-title="Anatomy 2: sandbox to reward" data-dur="490" data-steps="17" data-result="fail">
+  <div class="panes">
+  <div class="pane" data-s="0" data-until="4" data-pane="5 Sandbox">
+  <div class="tracker" data-now="5"></div>
+  <div class="head"><div class="kicker">Step 5 of 10 · Sandbox</div><h2 class="wide">Run the model's code in a locked box.</h2></div>
+  <div class="split even top">
+    <div class="layers">
+      <div class="lay top" data-s="3"><b>Hidden tests</b><span>added last, so the model cannot change them</span></div>
+      <div class="lay mid" data-s="2"><b>The model's files</b><span>the answer</span></div>
+      <div class="lay bot" data-s="1"><b>Starting code</b><span>the shop app</span></div>
+    </div>
+    <div class="panel warn" data-s="4"><div class="ph">The box</div>
+      <ul class="clean">
+        <li>No internet</li><li>One CPU, 512 MB of memory</li><li>Cannot touch the tests</li><li>Thrown away after every run</li>
+      </ul>
+    </div>
+  </div>
+
+  </div>
+  <div class="pane" data-s="5" data-until="9" data-pane="6 Reward">
+  <div class="tracker" data-now="6"></div>
+  <div class="head"><div class="kicker">Step 6 of 10 · Reward</div><h2 class="wide">Three checks. All pass: 1.0. Anything else: 0.0.</h2></div>
+  <div class="flow3 flow4">
+    <div class="panel" data-s="6"><div class="ph">1</div><p class="big">Finished cleanly</p></div>
+    <div class="panel" data-s="7"><div class="ph">2</div><p class="big">All 13 tests ran</p></div>
+    <div class="panel" data-s="8"><div class="ph">3</div><p class="big">None failed or skipped</p></div>
+    <div class="panel good" data-s="9"><div class="ph">reward</div><p class="big mono">1.0</p></div>
+  </div>
+  <p class="sub" data-s="9">Like a green CI run: one number, no opinions.</p>
+
+  </div>
+  <div class="pane" data-s="10" data-until="13" data-pane="Partial credit">
+  <div class="tracker" data-now="6"></div>
+  <div class="head"><div class="kicker">Step 6, continued · Reward design</div><h2 class="wide">Partial credit can pay for doing nothing.</h2></div>
+  <div data-widget="rewardlab" data-from="10"></div>
+
+  </div>
+  <div class="pane" data-s="14" data-pane="Cheating">
+  <div class="tracker" data-now="6"></div>
+  <div class="head"><div class="kicker red">Step 6, continued · Reward hacking</div><h2 class="wide">The model pleases the judge, not you.</h2></div>
+  <div class="cols c2">
+    <div class="panel bad" data-s="15"><div class="ph">Found in my gym</div><p class="big">Delete the stock lock. Tests still pass: 1.0.</p></div>
+    <div class="panel bad" data-s="16"><div class="ph">Found in my gym</div><p class="big">Fake the test report. Empty answer: 1.0.</p></div>
+  </div>
+  <p class="statement" data-s="17">Never let the model grade its own work.</p>
+
+  </div>
+  </div>
+  <aside class="notes" data-pane-start="0">
+    <p><strong>1:50, four presses.</strong> The model's code is untrusted code, and we are about to run it. So it runs in a box.</p>
+    <p>Press 1, 2, 3: the box is built in layers. The shop app first, then the model's files, then the hidden tests last, so the answer can never overwrite the grader.</p>
+    <p>Press 4: the rules of the box. No internet, one CPU and 512 MB, the model cannot write to tests or vendor, and the container is thrown away after every run. It is a normal Docker container with the risky Linux powers switched off.</p>
+  </aside>
+  <aside class="notes" data-pane-start="5">
+    <p><strong>2:00, four presses.</strong> The reward is the red or green from the TDD act, turned into a number.</p>
+    <p>Check 1: the test process finished cleanly, exit code zero. Check 2: the right number of tests ran, all 13 for cart-add. That stops an answer that deletes tests or crashes before they run. Check 3: nothing failed, errored or was skipped.</p>
+    <p>Press 4: all three hold, the reward is 1.0. Anything else, including garbage output or a timeout, is 0.0. Objective, automatic, repeatable.</p>
+  </aside>
+  <aside class="notes" data-pane-start="10">
+    <p><strong>2:10, three presses.</strong> Real numbers from cart-update: 25 tests, 21 from earlier work, 4 new for this task.</p>
+    <p>Press 1, all or nothing: only the correct answer is paid. Fair, but a near miss earns the same as doing nothing.</p>
+    <p>Press 2, share of all tests: sounds kind. But an empty answer already passes the 21 old tests, so doing nothing scores 0.84, the same as my model's real try. The model would learn that doing nothing is fine.</p>
+    <p>Press 3, share of only the new tests, and the old ones must still pass: empty is 0, half done is 0.5, correct is 1. The reward is a specification. The model will produce whatever it pays for.</p>
+  </aside>
+  <aside class="notes" data-pane-start="14">
+    <p><strong>2:10, three presses.</strong> Two real holes I found in my own gym, before any training.</p>
+    <p>Press 1: I removed lockForUpdate from checkout, the guard against two buyers taking the last item. Every test still passed, because the tests run one buyer at a time on SQLite. The reward can only punish what the tests check.</p>
+    <p>Press 2: model code can register a shutdown function that rewrites the test report with fake passes. An unimplemented feature scored 1.0. I reproduced it and documented it with a failing-on-purpose test. It is not fixed yet, and it must be before any real training.</p>
+    <p>Press 3: the fix direction. The verdict must come from a process the model's code never runs in.</p>
+  </aside>
+</section>
+
+<section class="slide" data-section="Anatomy of RL" data-title="Anatomy 3: reward to learning" data-dur="530" data-steps="17">
+  <div class="panes">
+  <div class="pane" data-s="0" data-until="3" data-pane="7 Group">
+  <div class="tracker" data-now="7"></div>
+  <div class="head"><div class="kicker">Step 7 of 10 · Group</div><h2 class="wide">Ask the same task eight times.</h2></div>
+  <div data-widget="groupsample" data-from="0"></div>
+
+  </div>
+  <div class="pane" data-s="4" data-until="7" data-pane="8 Advantage">
+  <div class="tracker" data-now="8"></div>
+  <div class="head"><div class="kicker">Step 8 of 10 · Advantage</div><h2 class="wide">Compare each answer with the group average.</h2></div>
+  <div data-widget="advantage" data-from="4"></div>
+
+  </div>
+  <div class="pane" data-s="8" data-until="11" data-pane="9 Update">
+  <div class="tracker" data-now="9"></div>
+  <div class="head"><div class="kicker">Step 9 of 10 · Update</div><h2 class="wide">Make the winners' choices a little more likely.</h2></div>
+  <div data-widget="policyupdate" data-from="8"></div>
+
+  </div>
+  <div class="pane" data-s="12" data-pane="10 Repeat">
+  <div class="tracker" data-now="10"></div>
+  <div class="head"><div class="kicker">Step 10 of 10 · Repeat</div><h2 class="wide">One lap, then thousands more.</h2></div>
+  <div class="lap">
+    <div class="ls" data-s="13"><span class="k">task</span><b>cart-add</b></div>
+    <div class="ls" data-s="13"><span class="k">8 answers</span><b>one prompt</b></div>
+    <div class="ls" data-s="14"><span class="k">rewards</span><b class="mono">0 0 1 0 0 0 1 0</b></div>
+    <div class="ls" data-s="14"><span class="k">advantages</span><b class="mono">-.6 -.6 +1.7 -.6 -.6 -.6 +1.7 -.6</b></div>
+    <div class="ls" data-s="15"><span class="k">update</span><b>nudge the winners</b></div>
+  </div>
+  <div class="cols c2">
+    <div class="panel warn" data-s="16"><div class="ph">The catch</div><p class="big">No passes means no signal. Teach with examples first.</p></div>
+    <div class="panel acc" data-s="17"><div class="ph">The habit</div><p class="big">Read answers, not just scores.</p></div>
+  </div>
+
+  </div>
+  </div>
+  <aside class="notes" data-pane-start="0">
+    <p><strong>2:00, three presses.</strong> For one task we do not take one answer, we take a group, say eight. Sampling is random, so the eight answers differ.</p>
+    <p>Press 1: today's base model. Eight tries, all 0.0. Every answer looks equally bad, so there is nothing to learn from. That is my real baseline on the Laravel tasks.</p>
+    <p>Press 2: imagine a slightly better model. Two of eight pass. Now the winners stand out from the losers, and that difference is the learning signal.</p>
+    <p>Press 3: why a group at all. A 1.0 alone means nothing. It is great if the others failed and ordinary if they all passed. The group gives the comparison.</p>
+  </aside>
+  <aside class="notes" data-pane-start="4">
+    <p><strong>2:20, three presses.</strong> Same eight rewards. The group average is 0.25, two out of eight.</p>
+    <p>Press 1: the advantage of an answer is how far it sits above or below that average. Winners get a big positive number, losers a small negative one. The real method, GRPO, also divides by the spread of the scores, which is why the numbers are +1.7 and -0.6. You do not need the formula, only the idea.</p>
+    <p>Press 2: above average, do more of it. Below, do less.</p>
+    <p>Press 3: the key case. If all eight fail, or all eight pass, every advantage is zero. No signal, no learning. You can click any answer to flip it and watch the bars move.</p>
+  </aside>
+  <aside class="notes" data-pane-start="8">
+    <p><strong>2:20, three presses.</strong> This is the learning itself. Remember from step 3: an answer is a chain of token choices, each with a probability.</p>
+    <p>Press 1: one choice inside an answer, how to add an item to the cart. Before the update, the model prefers create.</p>
+    <p>Press 2: the two winning answers chose firstOrNew, the losers chose create. Winners carry +1.7, losers -0.6.</p>
+    <p>Press 3: after the update, firstOrNew is more likely and create less likely. Illustrative numbers, real mechanism. Each lap is a small nudge, with limits so one lap cannot wreck the model. Only a small adapter is trained, which is what LoRA means, so it fits on modest hardware.</p>
+  </aside>
+  <aside class="notes" data-pane-start="12">
+    <p><strong>2:10, five presses.</strong> Put it together. Press 1: pick a task, sample eight answers. Press 2: run each in the sandbox, two pass, compute advantages. Press 3: nudge the model toward the two winners. Then the next task, thousands of times. These numbers are illustrative: I have not trained yet.</p>
+    <p>Press 4, the catch, also called the cold-start problem: my base model solves none of the seven Laravel tasks, so every group is all zeros and every advantage is zero. The usual fix: fine-tune on good examples first until some answers pass, then reinforce.</p>
+    <p>Press 5, the habit: while training, watch the pass rate on held-out tasks and read saved answers. A score can rise while the code gets worse.</p>
+  </aside>
+</section>

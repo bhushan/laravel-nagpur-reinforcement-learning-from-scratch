@@ -1,0 +1,108 @@
+/* ============================================================ ENGINE + CHROME
+   A slide is a stage with steps. [data-s] elements wait at opacity 0 until the
+   engine adds .on. The rail at the bottom is a test run: every slide is one
+   dot, and the dots turn green behind you. */
+.slide {
+  opacity: 0; visibility: hidden;
+  transition: opacity var(--alfred-motion-duration-slow) var(--alfred-motion-easing-out), visibility 0s linear var(--alfred-motion-duration-slow);
+}
+.slide.active { opacity: 1; visibility: visible; transition: opacity var(--alfred-motion-duration-slow) var(--alfred-motion-easing-out), visibility 0s; }
+.slide.center { align-items: center; text-align: center; }
+
+[data-s], [data-w] {
+  opacity: 0; transform: translateY(0.5rem); pointer-events: none;
+  transition: opacity var(--alfred-motion-duration-slow) var(--alfred-motion-easing-out), transform var(--alfred-motion-duration-slow) var(--alfred-motion-easing-out);
+}
+[data-s].on, [data-w].on { opacity: 1; transform: none; pointer-events: auto; }
+[data-s].fade { transform: none; }
+[data-s].scale { transform: scale(0.985); }
+[data-s].scale.on { transform: none; }
+
+.progress { position: fixed; inset-inline: 0; inset-block-start: 0; block-size: 2px; z-index: 30; background: var(--alfred-color-border-subtle); }
+.progress i { display: block; block-size: 100%; background: var(--alfred-color-evidence); transform-origin: 0 50%; transform: scaleX(0); transition: transform 0.5s var(--alfred-motion-easing-out); }
+
+/* ---- the rail --------------------------------------------------------- */
+.rail {
+  position: fixed; inset-inline: 0; inset-block-end: 0; z-index: 20;
+  block-size: var(--deck-rail);
+  display: flex; align-items: center; gap: var(--alfred-spacing-16);
+  padding-inline: var(--deck-gutter);
+  background: linear-gradient(to top, var(--alfred-color-background) 70%, transparent);
+  font-family: var(--alfred-font-family-mono); font-size: 0.7rem; font-weight: 500;
+  letter-spacing: var(--alfred-font-tracking-caps); text-transform: uppercase;
+  color: var(--alfred-color-text-disabled);
+}
+.rail .pass {
+  padding: 0.08rem 0.45rem; border-radius: var(--alfred-radius-xs);
+  background: var(--alfred-color-success); color: var(--alfred-color-text-inverse); font-weight: 600; letter-spacing: 0.08em;
+}
+.rail .sect { min-inline-size: 7.5rem; color: var(--alfred-color-text-muted); white-space: nowrap; }
+.rail .ticks { flex: 1; display: flex; align-items: center; gap: 0.24rem; min-inline-size: 0; }
+.rail .ticks i {
+  display: block; flex: 0 1 0.62rem; min-inline-size: 0.2rem; block-size: 0.62rem; border-radius: 50%;
+  background: var(--alfred-color-border); cursor: pointer; position: relative;
+  transition: background-color var(--alfred-motion-duration-normal), transform var(--alfred-motion-duration-normal);
+}
+.rail .ticks i.sect-start { margin-inline-start: 0.6rem; }
+.rail .ticks i.sect-start:first-child { margin-inline-start: 0; }
+.rail .ticks i.done { background: var(--alfred-color-success); opacity: 0.75; }
+.rail .ticks i.done.fail { background: var(--alfred-color-danger); opacity: 1; }
+.rail .ticks i.cur { background: var(--alfred-color-evidence); transform: scale(1.45); box-shadow: 0 0 0 3px var(--alfred-color-evidence-subtle); }
+.rail .ticks i::after { content: ''; position: absolute; inset: -0.4rem -0.12rem; }
+.rail .clock { display: none; color: var(--alfred-color-warning-text); white-space: nowrap; }
+body.show-clock .rail .clock { display: block; }
+.rail .hint { white-space: nowrap; }
+.rail .idx { color: var(--alfred-color-text-muted); white-space: nowrap; }
+
+/* ---- overlays ----------------------------------------------------------- */
+.overlay {
+  position: fixed; inset: 0; z-index: 40; background: var(--alfred-color-overlay);
+  backdrop-filter: blur(6px); padding: 3rem var(--deck-gutter); overflow: auto;
+  opacity: 0; visibility: hidden; transition: opacity var(--alfred-motion-duration-normal);
+}
+.overlay.open { opacity: 1; visibility: visible; }
+.overlay h4 { font-family: var(--alfred-font-family-mono); font-size: 0.78rem; letter-spacing: var(--alfred-font-tracking-caps); text-transform: uppercase; color: var(--alfred-color-text-muted); margin-block-end: 1.4rem; }
+.ogrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.6rem; }
+.ogrid button, .omap button {
+  text-align: start; font: inherit; font-size: 0.92rem; color: var(--alfred-color-text-secondary);
+  background: var(--alfred-color-surface); border: 1px solid var(--alfred-color-border); border-radius: var(--alfred-radius-md);
+  padding: 0.6rem 0.8rem; cursor: pointer; display: flex; gap: 0.7rem; align-items: baseline;
+}
+.ogrid button:hover, .omap button:hover { background: var(--alfred-color-surface-raised); }
+.ogrid button.cur, .omap button.cur { border-color: var(--alfred-color-evidence); color: var(--alfred-color-text); }
+.n { font-family: var(--alfred-font-family-mono); font-size: 0.72rem; color: var(--alfred-color-text-disabled); }
+.omap { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1.6rem; align-items: start; }
+.omap .sec { display: flex; flex-direction: column; gap: 0.35rem; }
+.omap .sname { font-family: var(--alfred-font-family-mono); font-size: 0.8rem; color: var(--alfred-color-evidence-text); display: flex; justify-content: space-between; margin-block-end: 0.3rem; padding-block-end: 0.4rem; border-block-end: 1px solid var(--alfred-color-border); }
+.omap .sname span { color: var(--alfred-color-text-muted); }
+.omap button { padding: 0.4rem 0.7rem; font-size: 0.86rem; }
+
+/* ---- speaker notes ------------------------------------------------------ */
+.notes { display: none; }
+.notes-drawer {
+  position: fixed; inset-inline: 0; inset-block-end: 0; z-index: 35; max-block-size: 52vh; overflow: auto;
+  background: var(--alfred-color-surface-sunken); border-block-start: 1px solid var(--alfred-color-border-strong);
+  padding: 1.1rem var(--deck-gutter) 1.6rem;
+  transform: translateY(100%); transition: transform var(--alfred-motion-duration-slow) var(--alfred-motion-easing-out);
+}
+.notes-drawer.open { transform: none; }
+.notes-drawer h5 { font-family: var(--alfred-font-family-mono); font-size: 0.74rem; letter-spacing: var(--alfred-font-tracking-caps); text-transform: uppercase; color: var(--alfred-color-evidence-text); margin-block-end: 0.6rem; }
+.notes-drawer .body { font-size: 1rem; line-height: 1.55; color: var(--alfred-color-text-secondary); max-inline-size: 78ch; }
+.notes-drawer .body p { margin-block-end: 0.55rem; }
+.notes-drawer .body strong { color: var(--alfred-color-text); }
+
+/* ---- focus -------------------------------------------------------------- */
+:focus-visible { outline: none; box-shadow: var(--alfred-shadow-focus); border-radius: var(--alfred-radius-sm); }
+
+@media (max-width: 900px) { .rail .hint, .rail .sect { display: none; } :root { --deck-gutter: 1.6rem; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+/* ?all and ?selftest: no motion, so screenshots catch the settled state. */
+.static *, .static *::before, .static *::after { transition: none !important; animation: none !important; }
+
+.rail .auto { display: none; color: var(--alfred-color-evidence-text); white-space: nowrap; }
+body.autoplaying .rail .auto { display: block; }
+body.autoplaying .rail .hint { display: none; }
+.notes-drawer .keys { margin-block-start: 1.2rem; padding-block-start: 0.8rem; border-block-start: 1px solid var(--alfred-color-border); font-family: var(--alfred-font-family-mono); font-size: 0.68rem; line-height: 1.6; color: var(--alfred-color-text-muted); }

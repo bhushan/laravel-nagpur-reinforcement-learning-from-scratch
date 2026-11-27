@@ -1,0 +1,63 @@
+<section class="slide" data-section="From TDD to RL" data-title="Same loop, new names" data-dur="180" data-steps="13">
+  <div class="panes">
+  <div class="pane" data-s="0" data-until="7" data-pane="The names">
+  <div class="head"><div class="kicker" data-s="1">Act 2 · From TDD to RL</div><h2 data-s="1" class="wide">Every part of TDD has a name in reinforcement learning.</h2></div>
+  <table class="tbl rosetta">
+    <thead data-s="1"><tr><th>In TDD, you</th><th>In RL, the machine</th><th>In our Laravel example</th></tr></thead>
+    <tbody>
+      <tr data-s="2"><td>The developer</td><td><b>Agent.</b> The thing that acts and learns.</td><td class="mono">a language model</td></tr>
+      <tr data-s="3"><td>The ticket and the codebase</td><td><b>State.</b> What the agent sees before acting.</td><td class="mono">issue text and files</td></tr>
+      <tr data-s="4"><td>Writing the code</td><td><b>Action.</b> What the agent does.</td><td class="mono">the files it writes</td></tr>
+      <tr data-s="5"><td>The test suite</td><td><b>Environment.</b> The world that responds.</td><td class="mono">the shop app in a sandbox</td></tr>
+      <tr data-s="6"><td>Red or green</td><td><b>Reward.</b> A number saying how it went.</td><td class="mono">1.0 or 0.0</td></tr>
+      <tr data-s="7"><td>Fixing it after a failure</td><td><b>Policy update.</b> Do more of what scored.</td><td class="mono">a small change to the weights</td></tr>
+    </tbody>
+  </table>
+
+  </div>
+  <div class="pane" data-s="8" data-pane="The loop">
+  <div class="head"><div class="kicker" data-s="9">The loop</div><h2 data-s="9" class="wide">Act, get judged, adjust, repeat.</h2></div>
+  <svg viewBox="0 0 900 340" style="inline-size:100%;max-inline-size:62rem;block-size:auto" aria-label="The reinforcement learning loop between an agent and an environment">
+    <defs>
+      <marker id="rlA" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0L8 4.5L0 9z" fill="var(--alfred-color-evidence)"/></marker>
+      <marker id="rlG" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0L8 4.5L0 9z" fill="var(--alfred-color-success)"/></marker>
+    </defs>
+    <g data-s="9"><rect class="box acc" x="20" y="70" width="210" height="190" rx="12"/><text x="125" y="140" text-anchor="middle" font-size="22" font-weight="600" class="t-sans" style="fill:var(--alfred-color-text)">Agent</text><text x="125" y="170" text-anchor="middle" font-size="13" class="dim">the language model</text><text x="125" y="192" text-anchor="middle" font-size="13" class="dim">(the policy)</text></g>
+    <g data-s="9"><rect class="box" x="670" y="70" width="210" height="190" rx="12"/><text x="775" y="140" text-anchor="middle" font-size="22" font-weight="600" class="t-sans" style="fill:var(--alfred-color-text)">Environment</text><text x="775" y="170" text-anchor="middle" font-size="13" class="dim">the shop app</text><text x="775" y="192" text-anchor="middle" font-size="13" class="dim">and its hidden tests</text></g>
+    <g data-s="10"><path class="wire acc flow" marker-end="url(#rlA)" d="M232 115 H668"/><text x="450" y="100" text-anchor="middle" font-size="15" style="fill:var(--alfred-color-evidence-text)">action</text><text x="450" y="136" text-anchor="middle" font-size="12" class="dim">the files the model writes</text></g>
+    <g data-s="11"><path class="wire acc flow" marker-end="url(#rlA)" d="M668 190 H232"/><text x="450" y="176" text-anchor="middle" font-size="15" style="fill:var(--alfred-color-evidence-text)">state</text><text x="450" y="212" text-anchor="middle" font-size="12" class="dim">what it sees next: issue, files</text></g>
+    <g data-s="12"><path class="wire flow" marker-end="url(#rlG)" d="M668 245 H232" style="stroke:var(--alfred-color-success)"/><text x="450" y="232" text-anchor="middle" font-size="15" style="fill:var(--alfred-color-success-text)">reward</text><text x="450" y="268" text-anchor="middle" font-size="12" class="dim">1.0 if every test passes, else 0.0</text></g>
+    <g data-s="13"><path class="wire" d="M125 262 V310 H440" stroke-dasharray="4 5"/><text x="450" y="315" font-size="13" class="dim">adjust, so the next action earns more reward</text></g>
+  </svg>
+  <p class="sub" data-s="13">Nobody says which action was right. The agent only learns that some actions paid more than others.</p>
+
+  </div>
+  </div>
+  <aside class="notes" data-pane-start="0">
+    <p><strong>1:20.</strong> Reveal one row per press and say the middle column out loud. This single table is the translation key for the rest of the talk.</p>
+    <p>Developer is the agent. Ticket plus codebase is the state. Writing code is the action. The test suite is the environment. Red or green is the reward. Fixing after a failure is the policy update, which is the learning itself.</p>
+    <p>The only real difference: your fix lives in your head. The model's fix is a small change to millions of numbers called weights. We will open that up later.</p>
+  </aside>
+  <aside class="notes" data-pane-start="8">
+    <p><strong>1:10.</strong> Two boxes. The agent acts, the environment responds with a new state and a reward, and the agent adjusts so the next action earns more.</p>
+    <p>Map it to the cart: the agent is the model, the environment is the shop app plus the hidden tests. The action is the code it writes. The reward is 1.0 if every test passes, else 0.0.</p>
+    <p>Last arrow is the learning. We will spend the next twenty minutes inside each of these arrows.</p>
+  </aside>
+</section>
+
+<section class="slide" data-section="From TDD to RL" data-title="Watch a learner: the gridworld" data-dur="220" data-steps="4">
+  <div class="panes">
+  <div class="pane" data-s="0" data-pane="Gridworld">
+  <div class="head"><div class="kicker">A toy you can watch</div><h2 class="wide">A learner with only a reward, finding its way.</h2></div>
+  <div data-widget="gridworld" data-from="0"></div>
+
+  </div>
+  </div>
+  <aside class="notes" data-pane-start="0">
+    <p><strong>2:50, four steps.</strong> This is the one place the loop is small enough to see. A toy: 35 cells, and a table of numbers.</p>
+    <p>Step 1: explain the rules. Start bottom left, goal top right pays +1, the two red cells cost -1, every move costs a tiny amount so wandering is bad. The agent is told nothing about the map.</p>
+    <p>Step 2: it starts walking. Early episodes are random and take many moves. Step 3: speed it up and point at the colour spreading backwards from the goal: that is value flowing back from the reward. Step 4: show the greedy path, the policy it learned.</p>
+    <p>Say it clearly: this uses a lookup table, so it can only work on tiny worlds. A language model cannot have a table, so it uses a different update, the one we meet in the anatomy act. The loop is the same.</p>
+    <p>The buttons work too. Speed and reset are fair game for questions.</p>
+  </aside>
+</section>
